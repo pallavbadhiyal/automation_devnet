@@ -1,6 +1,6 @@
 ---
 - name: "GATHER INTERFACE STATUS FROM CISCO SWITCHES"
-  hosts: switches
+  hosts: all
   gather_facts: false
 
   tasks:
