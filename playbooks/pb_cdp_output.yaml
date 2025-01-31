@@ -5,7 +5,7 @@
 
   tasks:
     - name: 1001 - Run CDP commands on remote devices
-      ios_command:
+      cisco.ios.ios_command:
         commands:
           - show cdp neighbors
       register: cdp_output
@@ -20,8 +20,8 @@
 
     - name: 1004 - Parse CDP data using Genie
       set_fact:
-        parsed_data: "{{ cdp_output.stdout[0] | parse_genie(command='show cdp neighbors', os='ios') }}"
-        # parsed_data: "{{  cdp_output.stdout[0] | parse_cli_textfsm('ntc-templates/ntc_templates/templates/cisco_ios_show_cdp_neighbors.textfsm') }}"
+        # parsed_data: "{{ cdp_output.stdout[0] | parse_genie(command='show cdp neighbors', os='ios') }}"
+        parsed_data: "{{  cdp_output.stdout[0] | parse_cli_textfsm('ntc-templates/ntc_templates/templates/cisco_ios_show_cdp_neighbors.textfsm') }}"
 
     - name: 1005 - Display parsed CDP data
       debug:

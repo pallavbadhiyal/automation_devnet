@@ -1,7 +1,7 @@
 
 ---
 - name: "GATHER INTERFACE STATUS FROM CISCO SWITCHES"
-  hosts: switches
+  hosts: all
   gather_facts: false
 
   tasks:
@@ -10,7 +10,7 @@
       ios_command:
         commands: 
           - show ip interface brief
-          - show vlan brief
+          # - show vlan brief
       register: interface_output
 
     - name: 1002 - Read in parse_genie role
