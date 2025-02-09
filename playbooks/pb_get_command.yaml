@@ -10,9 +10,9 @@
     - name: Run show version on remote devices
       ios_command:
         commands: 
-          - show ip int brief
+          # - show ip int brief
         # - show version
-        # - sh ver | in uptime
+          - sh ver | in uptime
       
       register: ver
 
