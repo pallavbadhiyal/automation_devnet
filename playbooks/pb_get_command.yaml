@@ -1,7 +1,7 @@
 ---
 - name: Gather interface status from Cisco switches
   # hosts: switches
-  hosts: routers
+  hosts: all
   # hosts: cisco_devices
   gather_facts: no
 
