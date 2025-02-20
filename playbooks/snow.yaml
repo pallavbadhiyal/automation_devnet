@@ -1,0 +1,45 @@
+---
+- name: Open and manage ServiceNow Incident
+  hosts: localhost
+  gather_facts: no
+  vars:
+    servicenow_instance: "https://dev221333.service-now.com"
+    servicenow_username: "{{ lookup('env', 'SERVICENOW_USERNAME') }}"  # Use environment variable or AWX credential
+    servicenow_password: "{{ lookup('env', 'SERVICENOW_PASSWORD') }}"  # Use environment variable or AWX credential
+
+  tasks:
+    - name: Open a new incident in ServiceNow
+      servicenow.servicenow.snow_incident:
+        instance: "{{ servicenow_instance }}"
+        auth:
+          username: "{{ servicenow_username }}"
+          password: "{{ servicenow_password }}"
+        state: "new"  # Use 'new' instead of 'present'
+        short_description: "Created using AWX - Ansible"
+        description: "This is an example incident created by Ansible"
+        priority: "2"
+      register: incident_response
+
+    - name: Print incident information
+      debug:
+        msg: "Incident created with Sys ID: {{ incident_response.record.sys_id }}"
+
+    - name: Update incident notes
+      servicenow.servicenow.snow_incident:
+        instance: "{{ servicenow_instance }}"
+        auth:
+          username: "{{ servicenow_username }}"
+          password: "{{ servicenow_password }}"
+        state: "updated"
+        sys_id: "{{ incident_response.record.sys_id }}"  # Correct variable reference
+        comments: "This incident has been updated with additional information."
+
+    - name: Close the incident
+      servicenow.servicenow.snow_incident:
+        instance: "{{ servicenow_instance }}"
+        auth:
+          username: "{{ servicenow_username }}"
+          password: "{{ servicenow_password }}"
+        state: "closed"
+        sys_id: "{{ incident_response.record.sys_id }}"  # Correct variable reference
+        close_notes: "Incident closed by Ansible playbook."
