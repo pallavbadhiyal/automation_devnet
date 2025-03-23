@@ -12,7 +12,7 @@
 
     - name: "Display BGP Output"
       debug:
-        var: ver.stdout_lines
+        var: ver_output.stdout_lines
 
     - name: "Run show BGP summary command"
       ios_command:
