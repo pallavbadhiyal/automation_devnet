@@ -7,6 +7,16 @@
     - name: "Run show BGP summary command"
       ios_command:
         commands:
+          - show ver | in up|status
+      register: ver_output
+
+    - name: "Display BGP Output"
+      debug:
+        var: ver.stdout_lines
+
+    - name: "Run show BGP summary command"
+      ios_command:
+        commands:
           - show ip bgp summary | begin Neighbor
       register: bgp_output
 
