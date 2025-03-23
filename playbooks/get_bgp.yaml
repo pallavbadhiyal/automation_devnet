@@ -1,6 +1,6 @@
 ---
 - name: "Gather BGP Status from Cisco Routers"
-  hosts: routers
+  hosts: "{{ device_name }}"
   gather_facts: false
 
   tasks:
